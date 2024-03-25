@@ -1,0 +1,16 @@
+language: generic 
+sudo: required 
+services:
+  - docker
+
+before_install:
+  - docker build -t spratt88/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true spratt88/react-test npm test 
+
+after_success:
+  - docker build -t spratt88/multi-client ./client
+  - docker build -t spratt88/multi-nginx ./nginx
+  - docker build -t spratt88/multi-server ./server
+  - docker build -t spratt88/multi-worker ./worker
