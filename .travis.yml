@@ -14,3 +14,12 @@ after_success:
   - docker build -t spratt88/multi-nginx ./nginx
   - docker build -t spratt88/multi-server ./server
   - docker build -t spratt88/multi-worker ./worker
+  
+  # Log in to docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "DOCKER_ID" -- password-stdin
+
+  # Take images and push to docker hub 
+  - docker push spratt88/multi-client
+  - docker push spratt88/multi-nginx
+  - docker push spratt88/multi-server
+  - docker push spratt88/multi-worker
